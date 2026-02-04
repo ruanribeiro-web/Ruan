@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanchonete Salgado & Cia</title>
+    <link rel="stylesheet" href="style.css">
+      <!-- FONTES -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="banner">
+    <img src="imagens/fogo.png" class="fogo-banner" alt="fogo">
+    <img src="imagens/logo.png" class="logo-banner" alt="logo">
+        <h1>TÁ COM <span class="destaque-fome">FOME ?</span></h1>
+        <p>TEMOS O MELHOR LANCHE DA CIDADE</p>
+        <p><span class="destaque-pedido">FAÇA SEU PEDIDO</span></p>
+    </div>
+
+
+    <div id="etapa-compra">
+        <h2>NOSSOS PRODUTOS</h2>
+        <div class="produtos">
+            <div class="produto">
+                <img src="imagens/hamburguer.jpg" alt="Hambúrguer">
+                <p>Hambúrguer - R$ 15,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Pão Francês, Carne de hamburguer industrial, queijo cheddar, alface e tomate.</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Hambúrguer', 15)">Comprar</button>
+            </div>
+
+            <div class="produto">
+                <img src="imagens/coxinha.jpg" alt="Coxinha">
+                <p>Coxinha - R$ 6,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Massa crocante e recheio de frango com catupiry.</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Coxinha', 6)">Comprar</button>
+            </div>
+
+            <div class="produto">
+                <img src="imagens/pastel.jpg" alt="Pastel">
+                <p>Pastel - R$ 7,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Pastel frito na hora com recheio de sardinha.</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Pastel', 7)">Comprar</button>
+            </div>
+
+            <div class="produto">
+                <img src="imagens/batatafirta.jpg" alt="Batata Frita">
+                <p>Batata Frita - R$ 10,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Porção individual de batatas crocantes e sequinhas .</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Batata Frita', 10)">Comprar</button>
+            </div>
+
+            <div class="produto">
+                <img src="imagens/misto.jpg" alt="Misto Quente">
+                <p>Misto Quente - R$ 8,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Pão de forma colocado na torradeira com queijo mussarela e apresuntado.</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Misto Quente', 8)">Comprar</button>
+            </div>
+
+            <div class="produto">
+                <img src="imagens/cachorroquente.jpg" alt="Cachorro-Quente">
+                <p>Cachorro-Quente - R$ 12,00</p>
+                <button class="btn-info" onclick="toggleInfo(this)">Saber mais</button>
+                <div class="info-detalhes">Salsicha Master Boi, molho caseiro, batata palha, ervilha e milho verde.</div>
+                <button class="btn-comprar" onclick="adicionarPedido('Cachorro-Quente', 12)">Comprar</button>
+            </div>
+        </div>
+
+        <div class="pedido-area">
+    <h2>SEU PEDIDO</h2>
+     <div class="pedido-box" id="listaPedido"></div>
+      <button class="btn-limpar" onclick="limparCarrinho()">Limpar Carrinho</button>
+       <p class="total">Subtotal: R$ <span id="subtotal-carrinho">0.00</span></p>
+    <button class="btn-prosseguir" onclick="irParaCheckout()">Finalizar Pedido</button>
+      </div>
+    </div>
+
+    <div id="etapa-checkout" style="display: none;">
+        <div class="pedido-area">
+            <h2>FINALIZAR PEDIDO</h2>
+            <div class="checkout-form">
+                <label>Endereço de Entrega:</label>
+                <input type="text" id="endereco" placeholder="Rua, número, bairro...">
+
+                <label>Forma de Pagamento:</label>
+                <select id="formaPagamento" onchange="calcularTotalFinal()">
+                    <option value="cartao_credito">Cartão de Crédito</option>
+                    <option value="cartao_debito">Cartão de Débito</option>
+                    <option value="pix">Pix (10% de Desconto)</option>
+                </select>
+
+                <label>Cupom de Desconto:</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" id="inputCupom" placeholder="Ex: NOTA100 ">
+                    <button id="btnCupom" onclick="aplicarCupom()">Aplicar</button>
+                </div>
+            </div>
+
+            <div class="total-container">
+                <p>Subtotal Itens: R$ <span id="resumo-subtotal">0.00</span></p>
+                <p id="txtDesconto" style="color: green; display: none;">Desconto: - R$ <span id="valorDesconto">0.00</span></p>
+                <p class="total-grande">Total Final: R$ <span id="totalFinal">0.00</span></p>
+            </div>
+
+            <button class="btn-finalizar" onclick="confirmarPedido()">Confirmar e Enviar</button>
+            <button class="btn-voltar" onclick="voltarParaCompra()">Voltar ao Cardápio</button>
+        </div>
+    </div>
+
+    <footer class="rodape-container">
+    <div class="rodape-scroll">
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+        <span>📞 4002-8922 | 📧 salgadoecia@gmail.com</span>
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
